@@ -9,7 +9,6 @@ const MoviesList = ({ moviesList, currentPage }) => {
           <MoviesListItem
             movie={movie}
             key={movie.id}
-            link={`movies/${movie.id}`}
             currentPage={currentPage}
           />
         );

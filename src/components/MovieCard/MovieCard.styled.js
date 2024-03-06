@@ -22,3 +22,7 @@ export const Descr = styled.p`
   font-weight: 700;
   margin-bottom: 10px;
 `;
+export const Img = styled.img`
+  width: 300px;
+  height: auto;
+`;

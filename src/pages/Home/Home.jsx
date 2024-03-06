@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import Notiflix from 'notiflix';
 
 import { fetchMovies } from '../../services/api';
@@ -14,10 +14,9 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
-  const location = useLocation();
-  const navigate = useNavigate();
-  const queryParams = new URLSearchParams(location.search);
-  const pageFromURL = parseInt(queryParams.get('page') || '1', 10);
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams.get('page'));
+  const pageFromURL = parseInt(searchParams.get('page') || '1', 10);
 
   useEffect(() => {
     setPage(pageFromURL);
@@ -27,7 +26,6 @@ const Home = () => {
     async function getPopularMovies() {
       try {
         const result = await fetchMovies(pageFromURL);
-        console.log(result);
         const { results } = result;
         setMovies([...results]);
         const maxPagesAllowed = 500;
@@ -41,8 +39,7 @@ const Home = () => {
   }, [pageFromURL]);
 
   const handlePageChange = newPage => {
-    setPage(newPage);
-    navigate(`/?page=${newPage}`);
+    setSearchParams({ page: newPage });
   };
   return (
     <HomeWrapper>

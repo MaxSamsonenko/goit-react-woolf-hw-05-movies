@@ -16,21 +16,21 @@ const MovieReviews = () => {
   let { movieId } = useParams();
 
   useEffect(() => {
-    const getMovieReviews = async () => {
-      try {
-        const reviews = await fetchMovieReviews(movieId);
-        if (reviews.results.length === 0) {
-          throw new Error();
-        }
-        setReviews(reviews.results);
-        console.log(reviews);
-      } catch (error) {
-        console.log(error);
-        Notiflix.Notify.failure('There are no reviews for this movie yet');
-      }
-    };
-    getMovieReviews();
+    getMovieReviews(movieId);
   }, [movieId]);
+
+  const getMovieReviews = async movieId => {
+    try {
+      const reviews = await fetchMovieReviews(movieId);
+      if (reviews.results.length === 0) {
+        throw new Error();
+      }
+      setReviews(reviews.results);
+    } catch (error) {
+      console.log(error);
+      Notiflix.Notify.failure('There are no reviews for this movie yet');
+    }
+  };
 
   return reviews.length === 0 ? (
     <NoReviewsWrap>

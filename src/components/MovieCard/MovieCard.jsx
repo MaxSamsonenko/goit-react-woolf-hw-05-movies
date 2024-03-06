@@ -5,6 +5,7 @@ import {
   Tagline,
   Table,
   Descr,
+  Img,
 } from './MovieCard.styled';
 
 const MovieCard = ({ movie }) => {
@@ -37,7 +38,7 @@ const MovieCard = ({ movie }) => {
   return (
     <Wrapper>
       <div>
-        <img
+        <Img
           src={
             movie.poster_path === null
               ? `${NO_POSTER}`

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import Notiflix from 'notiflix';
 
 import { fetchMoviesByQuery } from '../../services/api';
@@ -17,11 +17,9 @@ const Movies = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const userQuery = queryParams.get('query');
-  const pageFromURL = parseInt(queryParams.get('page') || '1', 10);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const userQuery = searchParams.get('query');
+  const pageFromURL = parseInt(searchParams.get('page') || '1', 10);
 
   useEffect(() => {
     setQuery(userQuery || '');
@@ -42,7 +40,7 @@ const Movies = () => {
         Notiflix.Notify.failure('Something went wrong please try again later');
       }
     }
-  }, [page, userQuery]); // Depend on searchTerm and page
+  }, [page, userQuery]);
 
   const handleQueryChange = e => {
     setQuery(e.target.value);
@@ -51,12 +49,12 @@ const Movies = () => {
   const handleFormSubmit = async e => {
     e.preventDefault();
     setPage(1);
-    navigate(`/movies?query=${query}&page=1`);
+    setSearchParams({ query: query, page: 1 });
   };
 
   const handlePageChange = newPage => {
     setPage(newPage);
-    navigate(`/movies?query=${query}&page=${newPage}`);
+    setSearchParams({ query: query, page: newPage });
   };
 
   return (

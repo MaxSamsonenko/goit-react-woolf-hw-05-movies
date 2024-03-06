@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import {
   MovieCardLink,
@@ -9,16 +9,18 @@ import {
 const NO_POSTER =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png';
 
-export const MoviesListItem = ({ movie, link, currentPage }) => {
+export const MoviesListItem = ({ movie }) => {
   const location = useLocation();
-  // console.log(location);
-  console.log(currentPage);
+  const [searchParams] = useSearchParams();
 
   return (
     <ListItem>
       <MovieCardLink
-        to={`/${link}`}
-        state={{ from: location.pathname + location.search, page: currentPage }}
+        to={`/movies/${movie.id}`}
+        state={{
+          from: location.pathname + location.search,
+          page: searchParams.get('page'),
+        }}
       >
         <MovieImage
           src={
