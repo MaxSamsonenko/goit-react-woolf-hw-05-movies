@@ -17,7 +17,7 @@ function shouldForwardProp(propName, target) {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <StyleSheetManager shouldForwardProp={shouldForwardProp}>
     <React.StrictMode>
-      <BrowserRouter>
+      <BrowserRouter basename="/goit-react-woolf-hw-05-movies/">
         <App />
       </BrowserRouter>
     </React.StrictMode>
